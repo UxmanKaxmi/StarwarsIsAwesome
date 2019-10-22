@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { Loader } from '../components/Loader';
 import { _peopleAPI } from '../services/PeopleAPI';
 import { showToast } from '../components/Toast';
+import Carousel from 'react-native-snap-carousel';
 
 
 
@@ -41,15 +42,35 @@ export default class People extends Component {
 
     }
 
-
+    _renderItem({ item, index }) {
+        return (
+            <View style={{ flex: 1, backgroundColor: 'red' }}>
+                <Text style={styles.title}>{item.name}</Text>
+            </View>
+        );
+    }
     render() {
         return (
             this.state.isLoader ? <Loader /> :
-                <View>
-
+                <View style={styles.mainView}>
+                    <Carousel
+                        ref={(c) => { this._carousel = c; }}
+                        data={this.state.peopleData.results}
+                        renderItem={this._renderItem}
+                        horizontal={false}
+                        sliderWidth={500}
+                        itemWidth={200}
+                    />
                 </View>
         )
 
     }
 
 }
+
+
+const styles = StyleSheet.create({
+    mainView: {
+        flex: 1,
+    },
+})
