@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
+import { Loader } from '../components/Loader';
 
 
 
@@ -14,7 +15,7 @@ export default class People extends Component {
     componentDidMount() { }
 
     render() {
-        return (<Text>asdaasdasdasdasdsdasd</Text>
+        return (<Loader>asdaasdasdasdasdsdasd</Loader>
         )
 
     }

@@ -1,2 +1,5 @@
 # StarwarsIsAwesome
- A sample react-native project.
+
+A sample react-native project.
+
+-) enabled hermes
