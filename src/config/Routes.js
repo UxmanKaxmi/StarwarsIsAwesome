@@ -5,12 +5,18 @@ import {
   createAppContainer,
   Header,
 } from 'react-navigation';
-import HomePage from "../pages/HomePage";
+import People from "../pages/People";
+import Planets from "../pages/Planets";
+import StarShips from "../pages/StarShips";
+
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
 
-const HomeStack = createSwitchNavigator({
-  Home: HomePage,
-  // Login: LoginStack,
+const HomeStack = createMaterialTopTabNavigator({
+  People: People,
+  Planets: Planets,
+  StarShips: StarShips,
+
 });
 
 const HomeRoot = createAppContainer(HomeStack);
