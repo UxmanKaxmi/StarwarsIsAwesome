@@ -18,7 +18,7 @@ const HomeStack = createMaterialTopTabNavigator({
 }, {
 
   defaultNavigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ focused, horizontal, tintColor }) => {
+    tabBarIcon: ({ }) => {
       const { routeName } = navigation.state;
 
       if (routeName === 'People') {
@@ -29,26 +29,9 @@ const HomeStack = createMaterialTopTabNavigator({
 
       }
 
-      // You can return any component that you like here!
-      return <Text>asdasdasd</Text>;
     },
   }),
-  // activeTintColor?: string;
-  // allowFontScaling?: boolean;
-  // bounces?: boolean;
-  // inactiveTintColor?: string;
-  // pressColor?: string;
-  // pressOpacity?: number;
-  // scrollEnabled?: boolean;
-  // showIcon?: boolean;
-  // showLabel?: boolean;
-  // upperCaseLabel?: boolean;
-  // tabStyle?: StyleProp<ViewStyle>;
-  // indicatorStyle?: StyleProp<ViewStyle>;
-  // iconStyle?: StyleProp<ViewStyle>;
-  // labelStyle?: StyleProp<TextStyle>;
-  // contentContainerStyle?: StyleProp<ViewStyle>;
-  // style?: StyleProp<ViewStyle>;
+
 
   tabBarOptions: {
     activeTintColor: COLOR_PRIMARY,
