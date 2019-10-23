@@ -24,3 +24,17 @@ export const _morePlanetsAPI = (moreLink) => {
   };
   return fetchAPI(route, method);
 };
+
+
+export const _specificPlanet = (link) => {
+
+  let route = link.split("api").pop();
+  let method = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+  };
+  return fetchAPI(route, method);
+};

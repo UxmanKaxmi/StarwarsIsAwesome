@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Loader } from '../components/Loader';
 import { Text } from '../components/Text';
 import { _planetsAPI, _morePlanetsAPI } from '../services/PlanetsAPI';
@@ -7,12 +7,50 @@ import { showToast } from '../components/Toast';
 import Carousel from 'react-native-snap-carousel';
 import { getDeviceHeight, getDeviceWidth } from '../config/helpers';
 import { moderateScale } from 'react-native-size-matters';
-import { COLOR_PRIMARY, COLOR_PLANET_GREEN } from '../config/colors';
+import { COLOR_PRIMARY, COLOR_PLANET_GREEN, BG_Page } from '../config/colors';
 
 
 export default class Planets extends Component {
+
+    static navigationOptions = {
+        tabBarOptions: {
+            activeTintColor: COLOR_PLANET_GREEN,
+            inactiveTintColor: 'black',
+            tabStyle: {
+                backgroundColor: BG_Page
+            },
+            bounces: true,
+            indicatorStyle: {
+
+            },
+            labelStyle: {
+                fontFamily: 'sans-serif',
+                fontWeight: 'bold',
+                textShadowOffset: {
+                    width: 20,
+                    height: 20
+                },
+                textShadowColor: 'red',
+                letterSpacing: 1,
+
+            },
+            style: {
+                elevation: 22,
+                shadowColor: COLOR_PLANET_GREEN,
+
+            }
+        },
+    };
+
+
     constructor(props) {
         super(props);
+
+        const pageDataFromLastPage = this.props.navigation.getParam(
+            'dataFromPeoplePage',
+            ""
+        );
+        console.log('dataFromPeoplePage', pageDataFromLastPage)
         this.state = {
             isLoader: true,
             isMoreLoader: false,
@@ -20,6 +58,8 @@ export default class Planets extends Component {
             planetsData: ''
 
         };
+        this._renderItem = this._renderItem.bind(this);
+
     }
     componentDidMount() {
         this.fetchPlanetsData()
@@ -77,6 +117,14 @@ export default class Planets extends Component {
         });
     }
 
+
+    openInfoPage(item, index, pageName) {
+
+        console.log('openPlanetPage')
+        this.props.navigation.navigate('Info', { pageDataFromLastPage: item, pageName: pageName })
+
+
+    }
     _renderItem({ item, index }) {
         return (
             <View style={styles.mainCardView}>
@@ -150,29 +198,38 @@ export default class Planets extends Component {
                     </View>
 
                     <View style={[styles.mainBottomRowInnerView, { alignItems: 'center', }]}>
-                        <View style={[styles.cardButtonsView, {
-                            backgroundColor: COLOR_PRIMARY,
-                        }]}>
-                            <Text style={styles.cardButtonsViewText}>
-                                Planets
+                        {
+                            item.residents.length < 1 ? null :
+                                <TouchableOpacity onPress={() => this.openInfoPage(item, index, 'People')}
+                                    style={[styles.cardButtonsView, {
+                                        backgroundColor: COLOR_PRIMARY,
+                                    }]}>
+                                    <Text style={styles.cardButtonsViewText}>
+                                        People
                             </Text>
 
-                        </View>
+                                </TouchableOpacity>
+                        }
 
-                        <View style={styles.mainBottomTextView}>
+                        {/* <TouchableOpacity onPress={() => this.openPeoplePage(item, index)}
+                            style={styles.mainBottomTextView}>
                             <View style={styles.cardButtonsView}>
                                 <Text style={styles.cardButtonsViewText}>
-                                    Spaceships
+                                    Starships
                             </Text>
 
                             </View>
-                        </View >
+                        </TouchableOpacity > */}
 
                     </View>
 
                 </View>
             </View>
         );
+    }
+    openPeoplePage(item, index) {
+        console.log('openPeoplePage', item, index)
+
     }
     toLoadMoreItems(currentSliderIndex) {
         console.log('toLoadMoreItems', currentSliderIndex, this.state.planetsData.results.length - 1)
@@ -233,7 +290,7 @@ const styles = StyleSheet.create({
 
     },
     mainBottomTextValue: {
-        fontSize: moderateScale(12),
+        fontSize: moderateScale(11),
         fontWeight: '600'
 
     },

@@ -5,12 +5,15 @@ import { Text } from 'react-native';
 import Planets from "../pages/Planets";
 import StarShips from "../pages/StarShips";
 import People from '../pages/People';
+import Info from '../pages/Info';
+
+import { createStackNavigator } from 'react-navigation-stack';
 
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { COLOR_PRIMARY, BG_BLACK, BG_Page } from './colors';
 
 
-const HomeStack = createMaterialTopTabNavigator({
+const TabNavigator = createMaterialTopTabNavigator({
   People: People,
   Planets: Planets,
   StarShips: StarShips,
@@ -31,6 +34,7 @@ const HomeStack = createMaterialTopTabNavigator({
       }
     },
   }),
+
 
 
   tabBarOptions: {
@@ -63,6 +67,29 @@ const HomeStack = createMaterialTopTabNavigator({
 
 
 });
+
+
+const HomeStack = createStackNavigator({
+  TabNavigator: {
+    screen: TabNavigator,
+    navigationOptions: {
+      header: null,
+    },
+  },
+
+  Info: {
+    screen: Info,
+    navigationOptions: {
+      header: null,
+    },
+  },
+
+
+},
+
+);
+
+
 
 const HomeRoot = createAppContainer(HomeStack);
 

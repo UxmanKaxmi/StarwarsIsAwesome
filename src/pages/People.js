@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Loader } from '../components/Loader';
 import { Text } from '../components/Text';
 
@@ -23,6 +23,7 @@ export default class People extends Component {
             peopleData: ''
 
         };
+        this._renderItem = this._renderItem.bind(this);
     }
     componentDidMount() {
         this.fetchPeopleData()
@@ -40,6 +41,8 @@ export default class People extends Component {
             this.setState({
                 peopleData: peopleData,
             });
+            setTimeout(() => this._carousel.snapToNext(true), 100)
+
         } else {
             showToast('No data found...');
         }
@@ -79,6 +82,14 @@ export default class People extends Component {
             isMoreLoader: false,
         });
     }
+    openInfoPage(item, index, pageName) {
+
+        console.log('openPlanetPage')
+        this.props.navigation.navigate('Info', { pageDataFromLastPage: item, pageName: pageName })
+
+
+    }
+
 
     _renderItem({ item, index }) {
         return (
@@ -155,30 +166,38 @@ export default class People extends Component {
                     </View>
 
                     <View style={[styles.mainBottomRowInnerView, { alignItems: 'center', }]}>
-                        <View style={[styles.cardButtonsView, {
-                            backgroundColor: 'green',
-                        }]}>
+
+                        <TouchableOpacity
+                            onPress={() => this.openInfoPage(item, index, 'Planets')}
+                            style={[styles.cardButtonsView, {
+                                backgroundColor: 'green',
+                            }]}>
                             <Text style={styles.cardButtonsViewText}>
                                 Planets
                             </Text>
 
-                        </View>
+                        </TouchableOpacity>
 
-                        <View style={styles.mainBottomTextView}>
-                            <View style={styles.cardButtonsView}>
-                                <Text style={styles.cardButtonsViewText}>
-                                    Spaceships
+                        {
+                            item.starships.length < 1 ? null :
+                                <TouchableOpacity
+                                    onPress={() => this.openInfoPage(item, index, 'StarShips')}
+                                    style={styles.mainBottomTextView}>
+                                    <View style={styles.cardButtonsView}>
+                                        <Text style={styles.cardButtonsViewText}>
+                                            Starships
                             </Text>
 
-                            </View>
-                        </View >
-
+                                    </View>
+                                </TouchableOpacity >
+                        }
                     </View>
 
                 </View>
-            </View>
+            </View >
         );
     }
+
     toLoadMoreItems(currentSliderIndex) {
         console.log('toLoadMoreItems', currentSliderIndex, this.state.peopleData.results.length - 1)
         if (currentSliderIndex == this.state.peopleData.results.length - 1) { //will trigger moreDataAPI when scroll reaches the end of the list
@@ -195,9 +214,11 @@ export default class People extends Component {
             this.state.isLoader ? <Loader /> :
                 <View style={styles.mainView}>
                     <Carousel
+                        extraData={this.state}
                         ref={(c) => { this._carousel = c; }}
                         data={this.state.peopleData.results}
                         renderItem={this._renderItem}
+                        extraDa
                         vertical={true}
                         sliderWidth={getDeviceWidth()}
                         sliderHeight={getDeviceHeight() - moderateScale(150)}
@@ -234,11 +255,11 @@ const styles = StyleSheet.create({
         fontWeight: '800',
         letterSpacing: 1,
         color: 'white',
-        fontSize: moderateScale(14),
+        fontSize: moderateScale(12),
 
     },
     mainBottomTextValue: {
-        fontSize: moderateScale(12),
+        fontSize: moderateScale(11),
         fontWeight: '600'
 
     },
