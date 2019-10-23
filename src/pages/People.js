@@ -154,6 +154,27 @@ export default class People extends Component {
                         </View>
                     </View>
 
+                    <View style={[styles.mainBottomRowInnerView, { alignItems: 'center', }]}>
+                        <View style={[styles.cardButtonsView, {
+                            backgroundColor: 'green',
+                        }]}>
+                            <Text style={styles.cardButtonsViewText}>
+                                Planets
+                            </Text>
+
+                        </View>
+
+                        <View style={styles.mainBottomTextView}>
+                            <View style={styles.cardButtonsView}>
+                                <Text style={styles.cardButtonsViewText}>
+                                    Spaceships
+                            </Text>
+
+                            </View>
+                        </View >
+
+                    </View>
+
                 </View>
             </View>
         );
@@ -174,7 +195,6 @@ export default class People extends Component {
             this.state.isLoader ? <Loader /> :
                 <View style={styles.mainView}>
                     <Carousel
-                        layout={'ParallaxImage'}
                         ref={(c) => { this._carousel = c; }}
                         data={this.state.peopleData.results}
                         renderItem={this._renderItem}
@@ -209,6 +229,7 @@ const styles = StyleSheet.create({
     mainView: {
         flex: 1,
     },
+
     mainBottomTextKey: {
         fontWeight: '800',
         letterSpacing: 1,
@@ -227,6 +248,7 @@ const styles = StyleSheet.create({
         // backgroundColor: 'yellow'
     },
     mainBottomRowInnerView: {
+
         paddingVertical: moderateScale(2),
 
         flex: 1 / 3,
@@ -273,6 +295,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     genderView: {
+        elevation: 10,
+
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'blue',
@@ -280,5 +304,27 @@ const styles = StyleSheet.create({
         height: moderateScale(40),
         borderRadius: moderateScale(40)
 
-    }
+    },
+    cardButtonsView: {
+        elevation: 10,
+        marginVertical: moderateScale(2),
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'indigo',
+        width: moderateScale(60),
+        height: moderateScale(60),
+        borderRadius: moderateScale(60)
+
+    },
+    cardButtonsViewText: {
+        flex: 1,
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: moderateScale(8),
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        alignContent: 'center',
+        textAlignVertical: 'center'
+    },
 })

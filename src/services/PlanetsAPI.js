@@ -1,14 +1,26 @@
 import { fetchAPI } from '../config/helpers';
 
-export const _planetsAPI = user_id => {
+export const _planetsAPI = () => {
   let route = '/planets';
   let method = {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-    }),
+
+  };
+  return fetchAPI(route, method);
+};
+
+
+export const _morePlanetsAPI = (moreLink) => {
+  let route = '/planets/?' + moreLink;
+  let method = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
   };
   return fetchAPI(route, method);
 };
