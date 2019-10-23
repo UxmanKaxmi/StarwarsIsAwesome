@@ -24,11 +24,11 @@ const HomeStack = createMaterialTopTabNavigator({
       if (routeName === 'People') {
 
       } else if (routeName === 'Planets') {
+
       }
       else if (routeName === 'StarShips') {
 
       }
-
     },
   }),
 
